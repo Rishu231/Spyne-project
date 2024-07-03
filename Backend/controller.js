@@ -83,10 +83,21 @@ const getallposts = (req, res) => {
 const addlikes = (req, res) => {
     // const id = parseInt(req.params.id);
     const {user_id, discussion_id} = req.body;
-    client.query(queries.addlikes,[user_id, discussion_id], (error, results) => {
-        if (error) throw error;
-        res.status(200).json(results.rows);
-    }); 
+
+    client.query(queries.checkalreadylikes,[user_id, discussion_id], (error, results) => {
+        // console.log(results.rows)
+        if (results.rows.length){
+        // res.status(200).json(results.rows);
+            res.send("Email is Already Taken");
+        }else{
+            // res.status(200).json(results.rows);
+            client.query(queries.addlikes,[user_id, discussion_id], (error, results) => {
+                if (error) throw error;
+                res.status(200).json(results.rows);
+                // console.log(results.rows)
+            }); 
+        }
+    });
 };
 
 //remove likes from post
