@@ -29,7 +29,7 @@ const HomePage = () => {
     try {
       await axiosInstance.post('/users/addlike', { user_id: user.id, discussion_id: postId });
       // Update the post state to reflect the new like
-      setPosts(posts.map(post => post.id === postId ? { ...post, likes: post.likes + 1 } : post));
+      setPosts(posts.map(post => post.id === postId ? { ...post, likes: +post.likes + 1 } : post));
     } catch (error) {
       console.error('Error liking post:', error);
     }
