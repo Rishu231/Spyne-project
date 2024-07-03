@@ -1,12 +1,14 @@
 import React, { useEffect, useState, useContext } from 'react';
 import axiosInstance from './axiosInstance';
 import { UserContext } from './UserContext';
+import { useNavigate } from 'react-router-dom';
 import './css/Home.css';
 
 const HomePage = () => {
   const { user } = useContext(UserContext);
   const [posts, setPosts] = useState([]);
   const [likedPosts, setLikedPosts] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -23,6 +25,7 @@ const HomePage = () => {
   const handleLike = async (postId) => {
     if (!user) {
       alert('Please log in to like a post.');
+      navigate('/');
       return;
     }
     if (likedPosts.includes(postId)) {
@@ -31,8 +34,9 @@ const HomePage = () => {
     }
     try {
       await axiosInstance.post('/users/addlike', { user_id: user.id, discussion_id: postId });
+      // Update only the liked post
       setPosts(posts.map(post => post.id === postId ? { ...post, likes: +post.likes + 1 } : post));
-      setLikedPosts([...likedPosts, postId]);
+      setLikedPosts([...likedPosts, postId]); // Update likedPosts state with the liked post ID
     } catch (error) {
       console.error('Error liking post:', error);
     }
@@ -98,6 +102,14 @@ const PostCard = ({ post, onLike, onComment, likedPosts }) => {
           />
           <button type="submit">Comment</button>
         </form>
+        <div className="comments">
+          {post.comments.map((comment) => (
+            <div key={comment.comment_id} className="comment">
+              <p>{comment.comment_user_name}</p>
+              <p>{comment.comment_text}</p>
+            </div>
+          ))}
+        </div> 
       </div>
     </div>
   );

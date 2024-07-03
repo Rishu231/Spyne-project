@@ -63,3 +63,15 @@
     background-color: #0056b3;
   }
   
+  .signup-link {
+    display: block;
+    margin: 10px 0;
+    text-decoration: none;
+    color: blue;
+    font-size: 18px;
+  }
+  
+  .signup-link:hover {
+    text-decoration: underline;
+  }
+  

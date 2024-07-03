@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axiosInstance from './axiosInstance'; 
 import { UserContext } from './UserContext';
+import { Link } from 'react-router-dom';
 import './css/LoginPage.css'; 
 
 const LoginPage = () => {
@@ -79,6 +80,7 @@ const LoginPage = () => {
         {errors.api && <p className="error">{errors.api}</p>}
         {responseMessage && <p className="response-message">{responseMessage}</p>}
         <button type="submit" className="submit-button">Login</button>
+        <Link to="/signup" className="signup-link">Sign Up</Link>
       </form>
     </div>
   );

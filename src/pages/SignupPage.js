@@ -33,7 +33,7 @@ const SignupPage = () => {
   };
 
   const signupHandler = async (e) => {
-    navigate('/');
+    // navigate('/');
     e.preventDefault();
     const formErrors = validateForm();
     if (Object.keys(formErrors).length > 0) {
